@@ -7,26 +7,25 @@ package edu.odu.cs.cs330.items;
  * Consumable Items must be stackable.
  */
 @SuppressWarnings({
-    "PMD.BeanMembersShouldSerialize",
-    "PMD.CloneMethodReturnTypeMustMatchClassName",
-    "PMD.CloneThrowsCloneNotSupportedException",
-    "PMD.LawOfDemeter",
-    "PMD.OnlyOneReturn",
-    "PMD.ProperCloneImplementation",
-    "PMD.MethodArgumentCouldBeFinal",
-    "PMD.LocalVariableCouldBeFinal",
-    "PMD.BeanMembersShouldSerialize"
+        "PMD.BeanMembersShouldSerialize",
+        "PMD.CloneMethodReturnTypeMustMatchClassName",
+        "PMD.CloneThrowsCloneNotSupportedException",
+        "PMD.LawOfDemeter",
+        "PMD.OnlyOneReturn",
+        "PMD.ProperCloneImplementation",
+        "PMD.MethodArgumentCouldBeFinal",
+        "PMD.LocalVariableCouldBeFinal",
+        "PMD.BeanMembersShouldSerialize"
 })
 public class Consumable implements Item {
     /**
      * Format used to generate a printable representation.
      */
     public static final String FMT_STR = String.join(
-        "",
-        "  Nme: %s%n",
-        "  Eft: %s%n",
-        "  Use: %d%n"
-    );
+            "",
+            "  Nme: %s%n",
+            "  Eft: %s%n",
+            "  Use: %d%n");
 
     /**
      * The name...
@@ -47,24 +46,21 @@ public class Consumable implements Item {
      * Default to a Consumable Item with an empty name, no effect and zero
      * uses.
      */
-    public Consumable()
-    {
+    public Consumable() {
         this("[Placeholder]", "", 0);
     }
 
     /**
      * Create a fully initialized Consumable.
      */
-    public Consumable(String name, String effect, int uses)
-    {
+    public Consumable(String name, String effect, int uses) {
         this.name = name;
         this.effect = effect;
-        this.uses   = uses;
+        this.uses = uses;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 
@@ -73,8 +69,7 @@ public class Consumable implements Item {
      *
      * @return the set effect (i.e., buff or debuff)
      */
-    public String getEffect()
-    {
+    public String getEffect() {
         return this.effect;
     }
 
@@ -83,14 +78,12 @@ public class Consumable implements Item {
      *
      * @return number of total uses
      */
-    public int getNumberOfUses()
-    {
+    public int getNumberOfUses() {
         return this.uses;
     }
 
     @Override
-    public boolean isStackable()
-    {
+    public boolean isStackable() {
         return true;
     }
 
@@ -100,15 +93,19 @@ public class Consumable implements Item {
      * @param rhs object for which a comparison is desired
      */
     @Override
-    public boolean equals(Object rhs)
-    {
+    public boolean equals(Object rhs) {
         if (!(rhs instanceof Consumable)) {
             return false;
         }
 
         Consumable rhsItem = (Consumable) rhs;
 
-        return false;
+        if (this.name.compareToIgnoreCase(rhsItem.getName()) != 0)
+            return false;
+        if (this.effect.compareToIgnoreCase(rhsItem.getEffect()) != 0)
+            return false;
+
+        return true;
     }
 
     /**
@@ -118,17 +115,15 @@ public class Consumable implements Item {
      * return the result.
      */
     @Override
-    public int hashCode()
-    {
-        return -1;
+    public int hashCode() {
+        return (int) (name.hashCode() + effect.hashCode());
     }
 
     /**
      * *Print* the Consumable Item.
      */
     @Override
-    public String toString()
-    {
-        return "Not Implemented";
+    public String toString() {
+        return String.format(FMT_STR, this.name, this.effect, this.uses);
     }
 }

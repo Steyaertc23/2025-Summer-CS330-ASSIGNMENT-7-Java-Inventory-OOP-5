@@ -9,29 +9,27 @@ import java.util.Objects;
  * Armour may not be stacked.
  */
 @SuppressWarnings({
-    "PMD.BeanMembersShouldSerialize",
-    "PMD.CloneMethodReturnTypeMustMatchClassName",
-    "PMD.CloneThrowsCloneNotSupportedException",
-    "PMD.LawOfDemeter",
-    "PMD.OnlyOneReturn",
-    "PMD.ProperCloneImplementation",
-    "PMD.MethodArgumentCouldBeFinal",
-    "PMD.LocalVariableCouldBeFinal"
+        "PMD.BeanMembersShouldSerialize",
+        "PMD.CloneMethodReturnTypeMustMatchClassName",
+        "PMD.CloneThrowsCloneNotSupportedException",
+        "PMD.LawOfDemeter",
+        "PMD.OnlyOneReturn",
+        "PMD.ProperCloneImplementation",
+        "PMD.MethodArgumentCouldBeFinal",
+        "PMD.LocalVariableCouldBeFinal"
 })
-public class Armour extends Equippable implements Item
-{
+public class Armour extends Equippable implements Item {
     /**
      * Format used to generate a printable representation.
      */
     public static final String FMT_STR = String.join(
-        "",
-        "  Nme: %s%n",
-        "  Dur: %s%n",
-        "  Def: %d%n",
-        "  Mtl: %s%n",
-        "  Mdr: %s (Lvl %d)%n",
-        "  Emt: %s%n"
-    );
+            "",
+            "  Nme: %s%n",
+            "  Dur: %s%n",
+            "  Def: %d%n",
+            "  Mtl: %s%n",
+            "  Mdr: %s (Lvl %d)%n",
+            "  Emt: %s%n");
 
     /**
      * The amount of damage that can be negated.
@@ -41,8 +39,7 @@ public class Armour extends Equippable implements Item
     /**
      * Default to a armour with a defense of zero.
      */
-    public Armour()
-    {
+    public Armour() {
         super();
 
         this.defense = 0;
@@ -51,8 +48,7 @@ public class Armour extends Equippable implements Item
     /**
      * Create a fully initialized Armour.
      */
-    public Armour(String nme, int dur, int def, String mtl, String mdr, int lvl, String emt)
-    {
+    public Armour(String nme, int dur, int def, String mtl, String mdr, int lvl, String emt) {
         super(nme, dur, mtl, mdr, lvl, emt);
 
         this.defense = def;
@@ -63,8 +59,7 @@ public class Armour extends Equippable implements Item
      *
      * @return total defense provided
      */
-    public int getDefense()
-    {
+    public int getDefense() {
         return this.defense;
     }
 
@@ -75,15 +70,27 @@ public class Armour extends Equippable implements Item
      * @param rhs object for which a comparison is desired
      */
     @Override
-    public boolean equals(Object rhs)
-    {
+    public boolean equals(Object rhs) {
         if (!(rhs instanceof Armour)) {
             return false;
         }
 
         Armour rhsItem = (Armour) rhs;
 
-        return false;
+        if (this.getName().compareToIgnoreCase(rhsItem.getName()) != 0)
+            return false;
+        if (this.getMaterial().compareToIgnoreCase(rhsItem.getMaterial()) != 0)
+            return false;
+        if (this.getModifier().compareToIgnoreCase(rhsItem.getModifier()) != 0)
+            return false;
+        if (this.getModifierLevel() != rhsItem.getModifierLevel())
+            return false;
+        if (this.getElement().compareToIgnoreCase(rhsItem.getElement()) != 0)
+            return false;
+        if (this.getDefense() != rhsItem.getDefense())
+            return false;
+
+        return true;
     }
 
     /**
@@ -91,23 +98,22 @@ public class Armour extends Equippable implements Item
      * element, and defense.
      */
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(
-            this.getName()
-        );
+                this.getName(),
+                this.getMaterial(),
+                this.getModifier(),
+                this.getModifierLevel(),
+                this.getElement(),
+                this.getDefense());
     }
 
     /**
      * *Print* one Armour.
      */
     @Override
-    public String toString()
-    {
-        return "Use the provided format string";
+    public String toString() {
+        return String.format(FMT_STR, this.getName(), this.getDurability(), this.getDefense(), this.getMaterial(),
+                this.getModifier(), this.getModifierLevel(), this.getElement());
     }
 }
-
-
-
-
